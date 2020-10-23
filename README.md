@@ -7,3 +7,5 @@ Povlsomware is a Ransomware Proof-of-Concept created as a "secure" way to test a
 ## How does it work?
 Povlsomware works as a single exectuable, that when executed will perform the following steps: 
 1) Go through the entire file system looking for files with certain extension (i.e. jpeg, png, docx, txt, xls etc.)
+  - It will not go through C:\Windows
+2) 
