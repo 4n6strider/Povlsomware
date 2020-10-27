@@ -10,3 +10,9 @@ Povlsomware works as a single exectuable, that when executed will perform the fo
 2) Files matching the list of extensions will be encrypted using AES256 with the password "blahblah" (This can be changed in the program.cs-file).
 3) It will delete every shadowcopy on the affected system, if Povlsomware has been executed with Administrative rights. 
 4) A "ransom pop-up UI" is shown informing the user, how many files have been encrypted. The pop-up also contains a password-field, which allows for decrypting the files.
+
+
+## Extensionless Ransomware
+Many ransomware programs will encrypt files and change the original file extension to something like .Krab, .ppam, .trumphead. etc. The reason why most ransomware programs changes file extensions is so that they know which files to decrypt (if necessary). Povlsomware differs from most ransomware by keeping the original file extension. The files will thus look the same, however none of them will work as intended. 
+
+For a comprehensive list of ransomware extensions, see Comondos "Ransomware Extension List": https://enterprise.comodo.com/ransomware-extension-list.php. 
