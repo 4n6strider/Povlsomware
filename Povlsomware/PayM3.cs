@@ -11,7 +11,7 @@ namespace Povlsomware
         {
             InitializeComponent();
             label2.Text = Program.count.ToString() + " files have been encrypted";
-            listBox1.Items.AddRange(Program.myFiles.ToArray());
+            listBox1.Items.AddRange(Program.encryptedFiles.ToArray());
 
             textBox2.Text = 
                 "Your files can only be retrived by entering the correct password. \n\r" +
@@ -23,7 +23,7 @@ namespace Povlsomware
         {
             string input = textBox1.Text;
 
-            if (input == Program.getPass())
+            if (input == Program.GetPass())
             {
                 success = true;
                 button1.Text = "Decrypting... Please wait";
