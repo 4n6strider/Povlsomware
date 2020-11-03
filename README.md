@@ -16,3 +16,9 @@ Povlsomware works as a single exectuable, that when executed will perform the fo
 Many ransomware programs will encrypt files and change the original file extension to something like .Krab, .ppam, .trumphead. etc. The reason why most ransomware programs changes file extensions is so that they know which files to decrypt (if necessary). Povlsomware differs from most ransomware by keeping the original file extension. The files will thus look the same, however none of them will work as intended. 
 
 For a comprehensive list of ransomware extensions, see Comondos "Ransomware Extension List": https://enterprise.comodo.com/ransomware-extension-list.php. 
+
+
+## Cobaltstrike integration 
+Povlsomware.exe can be executed in memory using Cobaltstrikes "Execute-Assembly" command:
+
+![alt text](https://raw.githubusercontent.com/povlteksttv/Povlsomware/master/img/execute-assembly.png?raw=true)
