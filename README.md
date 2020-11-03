@@ -21,4 +21,4 @@ For a comprehensive list of ransomware extensions, see Comondos "Ransomware Exte
 ## Cobaltstrike integration 
 Povlsomware.exe can be executed in memory using Cobaltstrikes "Execute-Assembly" command:
 
-![alt text](https://raw.githubusercontent.com/povlteksttv/Povlsomware/master/img/execute-assembly.png?raw=true)
+![alt text](https://raw.githubusercontent.com/povlteksttv/Povlsomware/master/img/execute-assembly.PNG?raw=true)
