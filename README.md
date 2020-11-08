@@ -23,7 +23,7 @@ Povlsomware.exe can be executed in memory using Cobaltstrikes "Execute-Assembly"
 
 ![alt text](https://raw.githubusercontent.com/povlteksttv/Povlsomware/master/img/execute-assembly.PNG?raw=true)  
 
-The perfect thing about this, is that Povlsomware.exe is not needed on the victim-PC, but can be executed directly in memory from the attacker. 
+The perfect thing about this, is that Povlsomware.exe is not uploaded on the victim-PC, but is executed directly in memory. 
 
 More than that, Povlsomware is programmed to communicate back to the Cobaltstrike Teamserver, which files have been encrypted in the process. If the decryption password is entered, Povlsomware will communicate the decrypted files.
 
