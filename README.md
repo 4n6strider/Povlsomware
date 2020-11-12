@@ -6,17 +6,17 @@ Povlsomware is a Ransomware Proof-of-Concept created as a "secure" way to test a
 
 ## How does it work?
 Povlsomware works as a single exectuable, that when executed will perform the following steps: 
-1) Povlsomware will go through the file system looking for personal files with certain extensions (i.e. jpeg, png, docx, txt, xls etc.).
-2) Files matching the list of extensions will be encrypted using AES256 with the password "blahblah" (This can be changed in the program.cs-file).
+1) Povlsomware will go through the file system looking for personal files with certain extensions (i.e. jpeg, png, docx, txt, xls etc.) (This can be changed in program.cs).
+2) Files matching the list of extensions will be encrypted using AES256 with the password "blahblah" (This can be changed in program.cs).
 3) It will delete every shadowcopy on the affected system, if Povlsomware has been executed with Administrative rights. 
-4) An edited is made to the registry telling the system to run Povlsomware again on startup. 
+4) An edit is made to the registry, telling the system to run Povlsomware.exe again on startup. (This does not work when running through cobalt-strikes execute-assembly
 5) A "ransom pop-up UI" is shown informing the user, how many files have been encrypted. The pop-up also contains a password-field, which allows for decrypting the files.
 
 
 ## Extensionless Ransomware
 Many ransomware programs will encrypt files and change the original file extension to something like .Krab, .ppam, .trumphead. etc. The reason why most ransomware programs changes file extensions is so that they know which files to decrypt (if necessary). Povlsomware differs from most ransomware by keeping the original file extension. The files will thus look the same, however none of them will work as intended. 
 
-For a comprehensive list of ransomware extensions, see Comondos "Ransomware Extension List": https://enterprise.comodo.com/ransomware-extension-list.php. 
+For a comprehensive list of ransomware extensions, see Comodos "Ransomware Extension List": https://enterprise.comodo.com/ransomware-extension-list.php. 
 
 
 ## Cobaltstrike integration 
