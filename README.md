@@ -9,7 +9,8 @@ Povlsomware works as a single exectuable, that when executed will perform the fo
 1) Povlsomware will go through the file system looking for personal files with certain extensions (i.e. jpeg, png, docx, txt, xls etc.).
 2) Files matching the list of extensions will be encrypted using AES256 with the password "blahblah" (This can be changed in the program.cs-file).
 3) It will delete every shadowcopy on the affected system, if Povlsomware has been executed with Administrative rights. 
-4) A "ransom pop-up UI" is shown informing the user, how many files have been encrypted. The pop-up also contains a password-field, which allows for decrypting the files.
+4) An edited is made to the registry telling the system to run Povlsomware again on startup. 
+5) A "ransom pop-up UI" is shown informing the user, how many files have been encrypted. The pop-up also contains a password-field, which allows for decrypting the files.
 
 
 ## Extensionless Ransomware
