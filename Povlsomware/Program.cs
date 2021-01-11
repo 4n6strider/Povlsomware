@@ -23,6 +23,8 @@ namespace Povlsomware
         public static string GetPass()
         {
             return password;
+
+
         }
 
         static void Main()
